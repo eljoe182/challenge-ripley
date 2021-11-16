@@ -1,0 +1,24 @@
+@api = http://localhost:4000/api/v1/account/book
+
+###
+GET {{api}}/
+Content-Type: application/json
+
+
+### CREATE
+GET {{api}}/create
+Content-Type: application/json
+
+### STORE
+POST {{api}}/store
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "rut": "123123123",
+    "email": "asd@asd.com",
+    "phone": "123123123",
+    "bank": "0000004",
+    "accountType": 1,
+    "accountNumber": "11111222223333"
+}
