@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import axios from 'axios';
 import AccountBook from '../models/accountBook.model';
 import Transfer from '../models/transfer.model';
 import Transactions from '../models/transactions.model';
@@ -11,10 +12,15 @@ export const create = async (req, res) => {
       },
     ],
   });
+  const { data: banks } = await axios({
+    url: 'https://bast.dev/api/banks.php',
+    method: 'GET',
+  });
   return res.status(200).json({
     message: 'create transfer controller',
     resources: {
       accountBook,
+      ...banks,
     },
     data: null,
   });

@@ -26,7 +26,7 @@ export const create = async (req, res) => {
   return res.status(200).json({
     message: 'create accountBook controller',
     resources: {
-      banks,
+      ...banks,
       accountType,
     },
     data: null,
