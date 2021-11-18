@@ -1,8 +1,15 @@
 import crypto from 'crypto';
 import axios from 'axios';
+import twilio from 'twilio';
 import AccountBook from '../models/accountBook.model';
 import Transfer from '../models/transfer.model';
 import Transactions from '../models/transactions.model';
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_ACCOUNT_TOKEN;
+const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
+
+const clientTwilio = twilio(accountSid, authToken);
 
 export const create = async (req, res) => {
   const accountBook = await AccountBook.findAll({
@@ -46,6 +53,20 @@ export const store = async (req, res) => {
       amount,
       bankName,
     });
+    const accountBook = await AccountBook.findOne({
+      where: {
+        id: account,
+      },
+    });
+    await clientTwilio.messages
+      .create({
+        to: accountBook.phone,
+        from: phoneNumber,
+        body: `Transferencia recibida por un monto de ${amount}`,
+      })
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   return res.status(200).json({

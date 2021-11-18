@@ -13,6 +13,7 @@ POST {{api}}/store
 Content-Type: application/json
 
 {
-    "account": 1,
-    "amount": 20
+    "account": 2,
+    "amount": 20,
+    "bankName": "Banco Ripley"
 }
