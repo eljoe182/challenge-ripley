@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import ContainerComponent from '../components/ContainerComponent';
 import { create, store } from '../api/transfer.api'
 
@@ -49,10 +50,31 @@ const TransferPage = () => {
 
   const handleSubmit = async (el) => {
     el.preventDefault();
-    await store({
-      ...formData,
-      bankName: accountSelected.bankName
-    });
+    toast.promise(
+      store({
+        ...formData,
+        bankName: accountSelected.bankName
+      }),
+      {
+        loading: 'Transfiriendo',
+        success: (response) => {
+          setAccountSelected({
+            name: '',
+            email: '',
+            phone: '',
+            bankName: '',
+            accountType: ''
+          })
+          setFormData({
+            account: '',
+            amount: 0,
+            bankName: ''
+          })
+          el.target.reset();
+        },
+        error: (error) => `${error.toString()}`
+      }
+    )
   };
 
   return (
@@ -113,6 +135,7 @@ const TransferPage = () => {
           </form>
         </div>
       </div>
+      <Toaster />
     </ContainerComponent>
   );
 };

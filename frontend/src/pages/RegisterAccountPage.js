@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import ContainerComponent from '../components/ContainerComponent';
 import { create, store } from '../api/accountBook.api'
 import ValidateRut from '../utils/rut'
@@ -49,7 +50,18 @@ const RegisterAccountPage = () => {
     el.preventDefault();
     await store(formData).then((response) => {
       console.log(response);
-    }).catch((error) => {console.log(error)});
+      el.target.reset();
+      setFormData({
+        name: '',
+        rut: '',
+        email: '',
+        phone: '',
+        bank: '',
+        accountType: '',
+        accountNumber: '',
+      });
+      toast.success('Registrado satisfactoriamente.');
+    }).catch((error) => { toast.error(error) });
   }
 
   return (
@@ -178,13 +190,14 @@ const RegisterAccountPage = () => {
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  Save
+                  Registrar
                 </button>
               </div>
             </div>
           </form>
         </div>
       </div>
+      <Toaster />
     </ContainerComponent>
   );
 };

@@ -21,8 +21,8 @@ const ContainerComponent = (props) => {
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           {
             props.icon && (
-              <div class="relative">
-                <div class="absolute -left-20 -bottom-12">
+              <div className="relative">
+                <div className="absolute -left-20 -bottom-12">
                   {iconTitle(props.icon)}
                 </div>
               </div>
