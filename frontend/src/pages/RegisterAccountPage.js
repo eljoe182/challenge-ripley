@@ -53,8 +53,8 @@ const RegisterAccountPage = () => {
   }
 
   return (
-    <ContainerComponent>
-      <div className="grid grid-cols-4 gap-1">
+    <ContainerComponent title="Nuevo destinatario" icon="account">
+      <div className="grid grid-cols-3 gap-4">
         <div className="mt-5 md:mt-0 md:col-span-2">
           <form action="#" method="POST" onSubmit={handleSubmit}>
             <div className="shadow overflow-hidden sm:rounded-md">
@@ -66,6 +66,10 @@ const RegisterAccountPage = () => {
                       type="text"
                       name="name"
                       id="name"
+                      placeholder="ej. Pedro Pérez"
+                      maxLength="120"
+                      minLength="5"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -77,6 +81,10 @@ const RegisterAccountPage = () => {
                       type="text"
                       name="rut"
                       id="rut"
+                      placeholder="ej. 11222333-K"
+                      maxLength="20"
+                      minLength="8"
+                      required
                       onChange={handleOnChange}
                       onBlur={handleOnBlur}
                       className={
@@ -92,6 +100,10 @@ const RegisterAccountPage = () => {
                       type="text"
                       name="email"
                       id="email"
+                      placeholder="ej. usuario@servidor.ltd"
+                      maxLength="120"
+                      minLength="8"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -103,6 +115,10 @@ const RegisterAccountPage = () => {
                       type="tel"
                       name="phone"
                       id="phone"
+                      placeholder="ej. +56912341234"
+                      maxLength="20"
+                      minLength="8"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
@@ -113,6 +129,7 @@ const RegisterAccountPage = () => {
                     <select
                       id="bank"
                       name="bank"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
@@ -130,6 +147,7 @@ const RegisterAccountPage = () => {
                     <select
                       id="accountType"
                       name="accountType"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
@@ -148,15 +166,18 @@ const RegisterAccountPage = () => {
                       type="text"
                       name="accountNumber"
                       id="accountNumber"
+                      placeholder="ej. 99999999"
+                      maxLength="20"
+                      minLength="8"
+                      required
                       onChange={handleOnChange}
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-
                 </div>
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                   Save
                 </button>
               </div>

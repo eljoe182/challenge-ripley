@@ -1,4 +1,5 @@
 import sequelize from '../config/database';
+import Transfer from './transfer.model';
 
 const { DataTypes, Model } = require('sequelize');
 
@@ -27,6 +28,11 @@ Transactions.init(
       allowNull: false,
       field: 'code_reference',
     },
+    bankName: {
+      type: DataTypes.STRING(60),
+      allowNull: false,
+      field: 'bank_name',
+    },
     amount: {
       type: DataTypes.DECIMAL(18, 2),
       allowNull: false,
@@ -41,5 +47,10 @@ Transactions.init(
     updatedAt: false,
   }
 );
+
+Transactions.belongsTo(Transfer, {
+  foreignKey: 'operationId',
+  as: 'transfer',
+});
 
 export default Transactions;

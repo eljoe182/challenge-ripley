@@ -27,7 +27,7 @@ export const create = async (req, res) => {
 };
 
 export const store = async (req, res) => {
-  const { account, amount } = req.body;
+  const { account, amount, bankName } = req.body;
 
   const transfer = await Transfer.create({
     accountBookId: account,
@@ -44,6 +44,7 @@ export const store = async (req, res) => {
       operationType: 'TRA',
       codeReference: hash,
       amount,
+      bankName,
     });
   }
 

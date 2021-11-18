@@ -6,8 +6,8 @@ const ButtonHeaderComponent = ({ children, href }) => {
     <NavLink
       to={href}
       className={({ isActive }) => isActive ?
-        "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" :
-        "text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        "bg-blue-900 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium" :
+        "text-white hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
       }>
       {children}
     </NavLink>
