@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import axios from 'axios';
 import twilio from 'twilio';
+import nodemailer from 'nodemailer';
 import AccountBook from '../models/accountBook.model';
 import Transfer from '../models/transfer.model';
 import Transactions from '../models/transactions.model';
@@ -10,6 +11,32 @@ const authToken = process.env.TWILIO_ACCOUNT_TOKEN;
 const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
 const clientTwilio = twilio(accountSid, authToken);
+
+const bodyEmail = (texto) => `
+  <h1>Transferencia recibida<h1>
+  <p>
+    ${texto}
+  <p>
+`;
+
+const sendEmail = async ({ from, to, subject, text }) => {
+  const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST || 'localhost',
+    port: process.env.EMAIL_PORT || 25,
+    auth: {
+      user: process.env.EMAIL_USER || '',
+      pass: process.env.EMAIL_PASS || '',
+    },
+  });
+
+  return transporter.sendMail({
+    from,
+    to,
+    subject,
+    text,
+    html: bodyEmail(text),
+  });
+};
 
 export const create = async (req, res) => {
   const accountBook = await AccountBook.findAll({
@@ -53,20 +80,29 @@ export const store = async (req, res) => {
       amount,
       bankName,
     });
+
     const accountBook = await AccountBook.findOne({
       where: {
         id: account,
       },
     });
+    const message = `Ha recibido una transferencia por un monto de ${amount}`;
     await clientTwilio.messages
       .create({
-        to: accountBook.phone,
         from: phoneNumber,
-        body: `Transferencia recibida por un monto de ${amount}`,
+        to: accountBook.phone,
+        body: message,
       })
       .then((response) => {
         console.log(response);
       });
+    const infoEmail = await sendEmail({
+      from: 'no-reply@example.com',
+      to: accountBook.email,
+      subject: 'Banco - Transferencia de reibida',
+      text: message,
+    });
+    console.log(infoEmail);
   }
 
   return res.status(200).json({
