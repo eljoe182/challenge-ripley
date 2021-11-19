@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import ContainerComponent from '../components/ContainerComponent';
 import { index } from '../api/transactions.api'
 
@@ -6,11 +7,18 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState([]);
 
   const getData = async () => {
-    await index().then((response) => {
-      const { data } = response;
-      console.log(data);
-      setTransactions(data)
-    });
+    toast.promise(
+      index(),
+      {
+        loading: 'Cargando información',
+        success: (response) => {
+          const { data } = response;
+          console.log(data);
+          setTransactions(data)
+        },
+        error: (error) => `${error.toString()}`,
+      },
+    );
   };
 
   useEffect(() => {
@@ -71,7 +79,7 @@ const TransactionsPage = () => {
           </div>
         </div>
       </div>
-
+      <Toaster />
     </ContainerComponent>
   );
 };

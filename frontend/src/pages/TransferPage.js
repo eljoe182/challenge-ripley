@@ -20,11 +20,18 @@ const TransferPage = () => {
   });
 
   const getData = async () => {
-    await create().then((response) => {
-      const { accountBook, banks: listBanks } = response.resources;
-      setAccounts(accountBook);
-      setBanks(listBanks);
-    });
+    toast.promise(
+      create(),
+      {
+        loading: 'Cargando información',
+        success: (response) => {
+          const { accountBook, banks: listBanks } = response.resources;
+          setAccounts(accountBook);
+          setBanks(listBanks);
+        },
+        error: (error) => `${error.toString()}`
+      },
+    );
   };
 
   useEffect(() => {

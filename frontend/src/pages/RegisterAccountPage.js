@@ -19,14 +19,19 @@ const RegisterAccountPage = () => {
   });
 
   const getData = async () => {
-    await create()
-      .then((response) => {
-        const { resources } = response;
-        setBanks(resources.banks);
-        setAccountType(resources.accountType);
-      })
-      .catch(error => console.log(error));
-  }
+    toast.promise(
+      create(),
+      {
+        loading: 'Cargando información',
+        success: (response) => {
+          const { resources } = response;
+          setBanks(resources.banks);
+          setAccountType(resources.accountType);
+        },
+        error: (error) => `${error.toString()}`,
+      },
+    );
+  };
 
   useEffect(() => {
     if (banks.length === 0) {
@@ -48,21 +53,27 @@ const RegisterAccountPage = () => {
 
   const handleSubmit = async (el) => {
     el.preventDefault();
-    await store(formData).then((response) => {
-      console.log(response);
-      el.target.reset();
-      setFormData({
-        name: '',
-        rut: '',
-        email: '',
-        phone: '',
-        bank: '',
-        accountType: '',
-        accountNumber: '',
-      });
-      toast.success('Registrado satisfactoriamente.');
-    }).catch((error) => { toast.error(error) });
-  }
+    toast.promise(
+      store(formData),
+      {
+        loading: 'Registrando...',
+        success: (response) => {
+          console.log(response);
+          el.target.reset();
+          setFormData({
+            name: '',
+            rut: '',
+            email: '',
+            phone: '',
+            bank: '',
+            accountType: '',
+            accountNumber: '',
+          });
+        },
+        error: (error) => `${error.toString()}`,
+      },
+    );
+  };
 
   return (
     <ContainerComponent title="Nuevo destinatario" icon="account">
